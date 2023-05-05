@@ -5,9 +5,7 @@ CREATE TABLE IF NOT EXISTS users
     id       SERIAL PRIMARY KEY,
     name     VARCHAR(20),
     age      INT,
-    password VARCHAR(20),
-    apartment_id INT,
-    FOREIGN KEY (apartment_id) REFERENCES apartments (id)
+    password VARCHAR(20)
 );
 CREATE TABLE IF NOT EXISTS apartments
 (

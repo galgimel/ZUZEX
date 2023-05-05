@@ -1,5 +1,6 @@
 package com.test_task.zuzex.rest_controller;
 
+import com.test_task.zuzex.exception.ApartmentWithoutOwnerException;
 import com.test_task.zuzex.request.ApartmentRequest;
 import com.test_task.zuzex.response.ApartmentResponse;
 import com.test_task.zuzex.service.ApartmentService;
@@ -31,12 +32,12 @@ public class ApartmentRestController {
     }
 
     @PostMapping
-    public ApartmentResponse addNewApartment(@RequestBody final ApartmentRequest apartmentRequest) {
+    public ApartmentResponse addNewApartment(@RequestBody final ApartmentRequest apartmentRequest) throws ApartmentWithoutOwnerException {
         return apartmentService.saveApartment(apartmentRequest);
     }
 
     @PutMapping
-    public ApartmentResponse updateApartment(@RequestBody final ApartmentRequest apartmentRequest) {
+    public ApartmentResponse updateApartment(@RequestBody final ApartmentRequest apartmentRequest) throws ApartmentWithoutOwnerException {
         return apartmentService.saveApartment(apartmentRequest);
     }
 

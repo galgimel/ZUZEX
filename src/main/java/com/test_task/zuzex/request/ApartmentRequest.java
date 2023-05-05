@@ -1,5 +1,4 @@
 package com.test_task.zuzex.request;
-import com.test_task.zuzex.response.UserResponse;
 import lombok.*;
 
 @Getter

@@ -1,5 +1,6 @@
 package com.test_task.zuzex.rest_controller;
 
+import com.test_task.zuzex.exception.UserWithoutApartmentException;
 import com.test_task.zuzex.request.UserRequest;
 import com.test_task.zuzex.response.UserResponse;
 import com.test_task.zuzex.service.UserService;
@@ -30,12 +31,12 @@ public class UserRestController {
     }
 
     @PostMapping
-    public UserResponse addNewUser(@RequestBody final UserRequest userRequest) {
+    public UserResponse addNewUser(@RequestBody final UserRequest userRequest) throws UserWithoutApartmentException {
         return userService.saveUser(userRequest);
     }
 
     @PutMapping
-    public UserResponse updateUser(@RequestBody final UserRequest userRequest) {
+    public UserResponse updateUser(@RequestBody final UserRequest userRequest) throws UserWithoutApartmentException {
         return userService.saveUser(userRequest);
     }
 

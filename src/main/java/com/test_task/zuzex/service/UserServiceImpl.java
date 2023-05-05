@@ -1,6 +1,5 @@
 package com.test_task.zuzex.service;
 
-import com.test_task.zuzex.entity.Apartment;
 import com.test_task.zuzex.entity.User;
 import com.test_task.zuzex.exception.UserWithoutApartmentException;
 import com.test_task.zuzex.repository.ApartmentRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,14 +40,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponse saveUser(UserRequest userRequest) {
-        User user = null;
-        try {
-            user = getUserOf(userRequest);
-        } catch (UserWithoutApartmentException e) {
-            System.err.println(e.getMessage());
-        }
-        assert user != null;
+    public UserResponse saveUser(UserRequest userRequest) throws UserWithoutApartmentException {
+        User user = of(userRequest);
         userRepository.save(user);
         return UserResponse.of(user);
     }
@@ -59,14 +51,12 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
-    private User getUserOf(UserRequest request) throws UserWithoutApartmentException {
-        User user;
-        if (request.getId() == 0) {
-            user = new User();
-        } else {
-            Optional<User> optional = userRepository.findById(request.getId());
-            user = optional.orElseGet(User::new);
-        }
+
+    private User of(UserRequest request) throws UserWithoutApartmentException {
+        User user = request.getId() == 0
+            ? new User()
+            : userRepository.findById(request.getId()).orElseGet(User::new);
+
         user.setName(request.getName());
         user.setAge(request.getAge());
         user.setPassword(request.getPassword());
@@ -74,26 +64,14 @@ public class UserServiceImpl implements UserService {
         if (request.getPropertyId() == 0) {
             user.setProperty(null);
         } else {
-            Apartment property = null;
-            Optional<Apartment> optional =
-                apartmentRepository.findById(request.getPropertyId());
-            if (optional.isPresent()) {
-                property = optional.get();
-            }
-            user.setProperty(property);
+            user.setProperty(apartmentRepository.findById(request.getPropertyId()).orElse(null));
         }
 
-        if (request.getApartmentId() == 0) {
-            throw new UserWithoutApartmentException("User Without Apartment");
-        } else {
-            Apartment apartment = null;
-            Optional<Apartment> optional =
-                apartmentRepository.findById(request.getApartmentId());
-            if (optional.isPresent()) {
-                apartment = optional.get();
-            }
-            user.setProperty(apartment);
-        }
+//        if (request.getApartmentId() == 0) {
+//            throw new UserWithoutApartmentException("User Without Apartment");
+//        } else {
+//            user.setApartment(apartmentRepository.findById(request.getApartmentId()).orElse(null));
+//        }
         return user;
     }
 }

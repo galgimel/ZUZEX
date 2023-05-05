@@ -13,7 +13,7 @@ public class UserResponse {
     private final int age;
     private final String password;
     private final ApartmentResponse property;
-    private final ApartmentResponse apartment;
+//    private final ApartmentResponse apartment;
 
     public static UserResponse of(final User user) {
         return UserResponse.builder()
@@ -22,7 +22,7 @@ public class UserResponse {
             .age(user.getAge())
             .password(user.getPassword())
             .property(ApartmentResponse.of(user.getProperty()))
-            .apartment(ApartmentResponse.of(user.getApartment()))
+//            .apartment(ApartmentResponse.of(user.getApartment()))
             .build();
     }
 }

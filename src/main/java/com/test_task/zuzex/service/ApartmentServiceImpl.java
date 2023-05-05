@@ -1,7 +1,6 @@
 package com.test_task.zuzex.service;
 
 import com.test_task.zuzex.entity.Apartment;
-import com.test_task.zuzex.entity.User;
 import com.test_task.zuzex.exception.ApartmentWithoutOwnerException;
 import com.test_task.zuzex.repository.ApartmentRepository;
 import com.test_task.zuzex.repository.UserRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,48 +34,34 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     @Transactional
-    public ApartmentResponse getApartment(int id) {
+    public ApartmentResponse getApartment(final int id) {
         return ApartmentResponse.of(apartmentRepository.getReferenceById(id));
     }
 
     @Override
     @Transactional
-    public ApartmentResponse saveApartment(ApartmentRequest apartmentRequest) {
-        Apartment apartment = null;
-        try {
-            apartment = getApartmentOf(apartmentRequest);
-        } catch (ApartmentWithoutOwnerException e) {
-            System.err.println(e.getMessage());
-        }
-        assert apartment != null;
+    public ApartmentResponse saveApartment(final ApartmentRequest apartmentRequest) throws ApartmentWithoutOwnerException {
+        var apartment = of(apartmentRequest);
         apartmentRepository.save(apartment);
         return ApartmentResponse.of(apartment);
     }
 
     @Override
     @Transactional
-    public void deleteApartment(int id) {
+    public void deleteApartment(final int id) {
         apartmentRepository.deleteById(id);
     }
 
-    private Apartment getApartmentOf(ApartmentRequest request) throws ApartmentWithoutOwnerException {
-        Apartment apartment;
-        if (request.getId() == 0) {
-            apartment = new Apartment();
-        } else {
-            Optional<Apartment> optional = apartmentRepository.findById(request.getId());
-            apartment = optional.orElseGet(Apartment::new);
-        }
+    private Apartment of(final ApartmentRequest request) throws ApartmentWithoutOwnerException {
+        var apartment = request.getId() == 0
+            ? new Apartment()
+            : apartmentRepository.findById(request.getId()).orElseGet(Apartment::new);
+
         apartment.setAddress(request.getAddress());
         if (request.getOwnerId() == 0) {
             throw new ApartmentWithoutOwnerException("Apartment Without Owner");
         } else {
-            User owner = null;
-            Optional<User> optionalUser = userRepository.findById(request.getOwnerId());
-            if (optionalUser.isPresent()) {
-                owner = optionalUser.get();
-            }
-            apartment.setOwner(owner);
+            apartment.setOwner(userRepository.findById(request.getOwnerId()).orElse(null));
         }
         return apartment;
     }

@@ -32,15 +32,15 @@ public class User {
         fetch = FetchType.EAGER
     )
     private Apartment property;
-    @ManyToOne(
-        cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.REFRESH,
-            CascadeType.DETACH
-        },
-        fetch = FetchType.EAGER
-    )
-    @JoinColumn(name = "apartment_id")
-    private Apartment apartment;
+//    @ManyToOne(
+//        cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE,
+//            CascadeType.REFRESH,
+//            CascadeType.DETACH
+//        },
+//        fetch = FetchType.EAGER
+//    )
+//    @JoinColumn(name = "apartment_id")
+//    private Apartment apartment;
 }

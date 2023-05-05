@@ -1,5 +1,4 @@
 package com.test_task.zuzex.request;
-import com.test_task.zuzex.response.ApartmentResponse;
 import lombok.*;
 
 @Getter
@@ -13,5 +12,5 @@ public class UserRequest {
     private final int age;
     private final String password;
     private final int propertyId;
-    private final int apartmentId;
+//    private final int apartmentId;
 }

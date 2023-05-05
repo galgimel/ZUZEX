@@ -1,5 +1,6 @@
 package com.test_task.zuzex.service;
 
+import com.test_task.zuzex.exception.UserWithoutApartmentException;
 import com.test_task.zuzex.request.UserRequest;
 import com.test_task.zuzex.response.UserResponse;
 
@@ -10,7 +11,7 @@ public interface UserService {
 
     UserResponse getUser(int id);
 
-    UserResponse saveUser(UserRequest userRequest);
+    UserResponse saveUser(UserRequest userRequest) throws UserWithoutApartmentException;
 
     void deleteUser(int id);
 }
