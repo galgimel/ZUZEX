@@ -10,12 +10,12 @@ import lombok.*;
 public class ApartmentResponse {
     private final int id;
     private final String address;
-    private final UserResponse owner;
+    private final int ownerId;
     public static ApartmentResponse of(Apartment apartment) {
         return ApartmentResponse.builder()
             .id(apartment.getId())
             .address(apartment.getAddress())
-            .owner(UserResponse.of(apartment.getOwner()))
+            .ownerId(apartment.getOwner() == null ? 0 : apartment.getOwner().getId())
             .build();
     }
 }

@@ -12,5 +12,4 @@ public class UserRequest {
     private final int age;
     private final String password;
     private final int propertyId;
-//    private final int apartmentId;
 }

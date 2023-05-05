@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "apartments")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,15 +32,4 @@ public class User {
         fetch = FetchType.EAGER
     )
     private Apartment property;
-//    @ManyToOne(
-//        cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE,
-//            CascadeType.REFRESH,
-//            CascadeType.DETACH
-//        },
-//        fetch = FetchType.EAGER
-//    )
-//    @JoinColumn(name = "apartment_id")
-//    private Apartment apartment;
 }

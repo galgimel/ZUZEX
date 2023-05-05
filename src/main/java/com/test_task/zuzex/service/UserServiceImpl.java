@@ -66,12 +66,6 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setProperty(apartmentRepository.findById(request.getPropertyId()).orElse(null));
         }
-
-//        if (request.getApartmentId() == 0) {
-//            throw new UserWithoutApartmentException("User Without Apartment");
-//        } else {
-//            user.setApartment(apartmentRepository.findById(request.getApartmentId()).orElse(null));
-//        }
         return user;
     }
 }
