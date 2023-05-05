@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: createTables
+      author: Samokhina Galina
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n/\s*\n|\n/\s*$
+            path: schema.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: insertInTables
+      author: Samokhina Galina
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            path: data.sql
+            relativeToChangelogFile: true
